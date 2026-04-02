@@ -1,0 +1,24 @@
+name: Executa Validatorul Java
+
+on: [push]
+
+jobs:
+  run-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cod
+        uses: actions/checkout@v4
+
+      - name: Seteaza Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Compileaza si Ruleaza
+        run: |
+          # 1. Compilăm folosind calea fizică a folderului
+          javac src/test/java/com/catalinmihalache/homework/UsernameValidator.java
+          
+          # 2. Rulăm folosind folderul radacină (src/test/java) și numele pachetului corect
+          echo -e "user gresit\nvalid123" | java -cp src/test/java com.catalinmihalache.homework.UsernameValidator
